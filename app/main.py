@@ -10,13 +10,14 @@ class Dictionary:
 
     def resize(self) -> None:
         if int(self.len_hash_table * (2 / 3)) < self.length:
-            self.length = 0
+            old_length = self.length
             self.len_hash_table *= 2
             copy_hash_table = self.hash_table.copy()
             self.hash_table: list = [None] * self.len_hash_table
             for key_value in copy_hash_table:
                 if key_value:
                     self.__setitem__(key_value[0], key_value[2])
+            self.length = old_length
 
     def hash_function(self, key: Any) -> int:
         return hash(key) % self.len_hash_table
