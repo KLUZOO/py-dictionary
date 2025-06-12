@@ -1,8 +1,8 @@
-from typing import Any, Tuple
+from typing import Any
 
 
 class Dictionary:
-    def __init__(self):
+    def __init__(self) -> None:
         self.current = 0
         self.length = 0
         self.len_hash_table = 8
@@ -35,7 +35,8 @@ class Dictionary:
                     non_bool = False
                 index_hash = (index_hash + 1) % self.len_hash_table
                 current_count += 1
-            elif self.hash_table[index_hash][0] == key and self.hash_table[index_hash][1] == hash(key):
+            elif (self.hash_table[index_hash][0] == key
+                  and self.hash_table[index_hash][1] == hash(key)):
                 return index_hash, True
             else:
                 index_hash = (index_hash + 1) % self.len_hash_table
@@ -44,7 +45,7 @@ class Dictionary:
     def __len__(self) -> int:
         return self.length
 
-    def __setitem__(self, key: Any, value: Any):
+    def __setitem__(self, key: Any, value: Any) -> None:
         try:
             index_hash = self.get_index_hash(key)
             self.hash_table[index_hash[0]] = [key, hash(key), value]
@@ -54,7 +55,7 @@ class Dictionary:
         except TypeError:
             raise TypeError("unhashable type: 'list'")
 
-    def __getitem__(self, key) -> Any:
+    def __getitem__(self, key: Any) -> Any:
         try:
             index_hash = self.get_index_hash(key)
             if not index_hash[1]:
@@ -81,11 +82,11 @@ class Dictionary:
                 elements.append(f"'{item[0]}': {item[2]}")
         return "{" + ", ".join(elements) + "}"
 
-    def __iter__(self):
+    def __iter__(self) -> Any:
         self.current = 0
         return self
 
-    def __next__(self):
+    def __next__(self) -> Any:
         while True:
             if self.current < self.len_hash_table:
                 value = self.hash_table[self.current]
@@ -109,28 +110,3 @@ class Dictionary:
         self.length = 0
         self.len_hash_table = 8
         self.hash_table: list = [None] * self.len_hash_table
-
-
-a = {'x': 1, 'y': 2}
-b = {'y': 100, 'z': 200}
-test = Dictionary()
-test2 = {"a": 2, "b": 3}
-test['a'] = 1
-test['b'] = 2
-test['c'] = 3
-test['d'] = 4
-test['f'] = 5
-# test['g'] = 6
-# test['t'] = 7
-# test['h'] = 8
-# test['j'] = 9
-# test['q'] = 10
-# test['p'] = 11
-# test['y'] = 12
-del test['b']
-print(test['c'])
-
-
-
-
-
